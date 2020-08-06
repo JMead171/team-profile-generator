@@ -1,8 +1,7 @@
 
   # My Project       
-  Team Profile Gnerator 
+  Team Profile Generator 
   
-
 
   ## Badge
 
