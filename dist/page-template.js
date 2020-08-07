@@ -1,9 +1,10 @@
 const generateTeam = teamArray => {
-  return `
+  console.log("generate team: ",teamArray);
+    return `
       
-      ${teamArray
-        .map(({ name, id, email, offLnkSch, role }) => {
-          return `
+      ${teamArray.map(({name, id, email, finalAnswer}) => {
+        console.log("Map: ", name, id, email, finalAnswer);  
+        return `
           <div>
             <h2>${name}</h3>
             <h3>Employee ID: ${id}</h3>
@@ -15,8 +16,9 @@ const generateTeam = teamArray => {
   `;
 };
 
-module.exports = teamArray => {
-  const { name, id, email, offLnkSch, role } = teamArray;
+module.exports = readTeam => {
+  const { name, id, email, finalAnwser} = readTeam;
+  console.log("readTeam: ",readTeam);
 
   return `
   <!DOCTYPE html>
@@ -29,7 +31,7 @@ module.exports = teamArray => {
       <title>Portfolio Demo</title>
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
       <link href="https://fonts.googleapis.com/css?family=Public+Sans:300i,300,500&display=swap" rel="stylesheet">
-      <link rel="stylesheet" href="style.css">
+      <link rel="stylesheet" href="./dist/style.css">
     </head>
 
     <body>
@@ -41,7 +43,7 @@ module.exports = teamArray => {
 
       <main class="container my-team>
         <section class="my-team" id="team">
-         ${generateTeam(team)}
+          ${generateTeam(readTeam)}
         </section>
       </main>
 

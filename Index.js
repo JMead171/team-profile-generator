@@ -2,59 +2,84 @@ const inquirer = require('inquirer');
 const { writeFile } = require('./lib/generate-html.js');
 const generateTeam = require('./dist/page-template.js');
 
-const Manager = require("./Manager.js");
-const Engineer = require("./Engineer.js");
-const Intern = require("./Intern.js");
+const Manager = require("./lib/Manager.js");
+const Engineer = require("./lib/Engineer");
+const Intern = require("./lib/Intern.js");
 
 const teamArray = [];
 
-
-
-const promptManager = () => {
-  return inquirer.prompt([
-    // Manager's name prompt  
+function addAnotherEmp() {
+  inquirer.prompt([
     {
-      type: 'input',
-      name: 'name',
-      message: "What is your team manager's name?"
-    },
-    // Manager's employee id prompt  
-    {
-      type: 'input',
-      name: 'id',
-      message: 'Enter your employee ID'
-    },
-    // Manager's email prompt  
-    {
-      type: 'input',
-      name: 'email',
-      message: 'Please enter your email address'
-    },
-    // Manager's office # prompt  
-    {
-      type: 'input',
-      name: 'office',
-      message: 'Enter office number'
+      type: 'confirm',
+      message: 'Do you want to add another employee?',
+      name: 'addAnother'
     }
   ])
-  console.log(promtpmanager);
-  let newMember = new Manager(name, id, email, office, role);
-  teamArray.push(newMember);
-};
+  .then(function(answer){
+    console.log('answer', answer)
+    if(answer.addAnother === true) {
+      whichEmp()
+    } else {
+      console.log('TIME TO BUILD THE TEAM!!!!')
+      console.log(teamArray)
+      let rawHTML = generateTeam(teamArray);
+      //.then(teamArray => {
+      //   return generateTeam(teamArray); 
+      // })
+      // .then(rawHTML => {
+      //   return writeFile(rawHTML);
+      // })
+      // .then(writeFileResponse => {
+      //   console.log(writeFileResponse);
+      // })
+      // .catch(err => {
+      //   console.log(err);
+      // });
+    }
+  })
+}
 
-const promptTeam = teamData => {
-  return inquirer.prompt([
+
+function finalEmpQuestion(answer) {
+  var teamRoleQ;
+  if (answer.role === 'Engineer') {
+    teamRoleQ = "What is your engineer's GitHub username";
+  } else if (answer.role === 'Intern') {
+    teamRoleQ = "What did your inter's go to school";
+  } else if (answer.role === 'Manager') {
+    teamRoleQ = "What is your officenumber";
+  }
+
+  inquirer.prompt({
+    name: 'final',
+    message: teamRoleQ,
+    type: 'input'
+  })
+  .then(function(finalAnswer){
+    console.log('Time to push to array', finalAnswer, answer)
+    if (answer.role === 'Engineer') {
+      let newEngineer = new Engineer(answer.name, answer.id, answer.email, finalAnswer.final)
+      teamArray.push(newEngineer)
+    } else if (answer.role === 'Intern') {
+      let newIntern = new Intern(answer.name, answer.id, answer.email, finalAnswer.final)
+      teamArray.push(newIntern)
+    } else if (answer.role === 'Manager') {
+      let newManager = new Manager(answer.name, answer.id, answer.email, finalAnswer.final)
+      teamArray.push(newManager)
+    }
+    addAnotherEmp()
+  })
+}
+
+function whichEmp() {
+  inquirer.prompt([
     // Menu to continue or finish
     {
-      type: 'checkbox',
+      type: 'list',
       name: 'role',
-      message: 'Please add another team member or finish (Select one)',
-      choices: ['Engineer', 'Intern', 'finish'],
-      validate: menuInput => {
-        if (menuInput === 'finish') {
-          return;
-        }
-      }
+      message: 'Which Employee would you like to make',
+      choices: ['Manager', 'Engineer', 'Intern'],
     },
     // Employee name prompt
     {
@@ -74,40 +99,10 @@ const promptTeam = teamData => {
       name: 'email',
       message: "What is your employee's email?"
     }])
+    .then(function(answer) {
+        console.log('this is the employee they want to make!!', answer)
+        finalEmpQuestion(answer)
+    })
+}
 
-    .then(function ({ role, name, id, email }) {
-      let teamRole = "";
-      if (role === 'Engineer') {
-        teamRole = "What is your engineer's GitHub username";
-      } else if (role === 'Intern') {
-        teamRole = "What did your inter's go to school";
-      };
-
-      return inquirer.prompt([
-        {
-          type: 'input',
-          name: 'linkSchool',
-          message: '${teamRole}'
-        }])
-
-      let newMember = new Enginner(name, id, email, linkSchool, role);
-      teamArray.push(newMember);
-    }
-};
-
-
-
-promptManager();
-promptTeam()
-  .then(teamArray => {
-    return generateTeam(teamArray);
-  })
-  .then(pageHTML => {
-    return writeFile(pageHTML);
-  })
-  .then(writeFileResponse => {
-    console.log(writeFileResponse);
-  })
-  .catch(err => {
-    console.log(err);
-  });
+whichEmp();
