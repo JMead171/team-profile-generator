@@ -26,17 +26,14 @@
   * [Usage](#usage)
   * [License](#license)
   * [Contributing](#contributing)
-
   
 
   ## Installation
   Clone GitHub and install Node.
   
-
   
   ## Usage 
   This program generates a HTML web page for a team profile.
-  
 
 
   ## License
@@ -47,15 +44,15 @@
   Pull requests are welcome. For major chages, please open an issue first to discuss what you would like to change. Make sure to update tests as required.
   
 
-  # Technology Used
+  ## Technology Used
   Node.js, Javascript, HTML, CSS, jest, inquirer
 
 
-  # Screen Shot
-  ![image](https://user-images.githubusercontent.com/64744763/89731728-60b81080-da17-11ea-87ea-45f028296829.png)
+  ## Screen Shot
+  ![image](https://user-images.githubusercontent.com/64744763/89733243-3ae43900-da22-11ea-9fd7-d47d275c03b9.png)
 
 
-  # Video Walkthrough
+  ## Video Walkthrough
   https://drive.google.com/file/d/1QDgd9DpgryWCjpdQkTJ6e_b5ve8s18yh/view
 
 
