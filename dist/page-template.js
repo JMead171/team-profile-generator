@@ -1,24 +1,48 @@
+const Manager = require("../lib/Manager.js");
+const Engineer = require("../lib/Engineer");
+const Intern = require("../lib/Intern.js");
+
 const generateTeam = teamArray => {
-  console.log("generate team: ",teamArray);
-    return `
-      
-      ${teamArray.map(({name, id, email, finalAnswer}) => {
-        console.log("Map: ", name, id, email, finalAnswer);  
-        return `
+  let i;
+  let myHtml = "";
+  for (i = 0; i < teamArray.length; i++) {
+      //console.log(teamArray, myHtml);
+      if (teamArray[i] instanceof Manager) {
+        myHtml += `
+        <div>
+          <h2>${teamArray[i].name}</h2>
+          <h2>Manager</h2>
+          <h3>Employee ID: ${teamArray[i].id}</h3>
+          <p>Email: <a href="mailto:${teamArray[i].email}">${teamArray[i].email}</a></p>
+          <h3>Office #: ${teamArray[i].officeNumber}</h3>
+        </div>
+      `;
+      } else if (teamArray[i] instanceof Engineer) {
+        myHtml += `
+        <div>
+          <h2>${teamArray[i].name}</h2>
+          <h2>Engineer</h2>
+          <h3>Employee ID: ${teamArray[i].id}</h3>
+          <p>Email: <a href="mailto:${teamArray[i].email}">${teamArray[i].email}</a></p>
+          <h3>GitHub: <a href="https://github.com/${teamArray[i].github}" target="_blank">${teamArray[i].github}</a></h3>
+        </div>
+        `;
+      } else if (teamArray[i] instanceof Intern) {
+        myHtml +=  `
           <div>
-            <h2>${name}</h3>
-            <h3>Employee ID: ${id}</h3>
-            <a href="${email}">Email: ${email}</a>
-            <a href="${link}">GitHub: ${link}</a>
+            <h2>${teamArray[i].name}</h2>
+            <h2>Intern</h2>
+            <h3>Employee ID: ${teamArray[i].id}</h3>
+            <p>Email: <a href="mailto:${teamArray[i].email}">${teamArray[i].email}</a></p>
+            <h3>School: ${teamArray[i].school}</h3>
           </div>
         `;
-        })}      
-  `;
+      }
+  } 
+  return myHtml;
 };
 
 module.exports = readTeam => {
-  const { name, id, email, finalAnwser} = readTeam;
-  console.log("readTeam: ",readTeam);
 
   return `
   <!DOCTYPE html>
@@ -28,10 +52,10 @@ module.exports = readTeam => {
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <meta http-equiv="X-UA-Compatible" content="ie=edge">
-      <title>Portfolio Demo</title>
+      <title>Team Generator</title>
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
       <link href="https://fonts.googleapis.com/css?family=Public+Sans:300i,300,500&display=swap" rel="stylesheet">
-      <link rel="stylesheet" href="./dist/style.css">
+      <link rel="stylesheet" href="./style.css">
     </head>
 
     <body>
@@ -41,7 +65,7 @@ module.exports = readTeam => {
         </div>
       </header>
 
-      <main class="container my-team>
+      <main class="container my-team">
         <section class="my-team" id="team">
           ${generateTeam(readTeam)}
         </section>

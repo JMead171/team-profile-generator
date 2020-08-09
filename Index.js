@@ -17,38 +17,30 @@ function addAnotherEmp() {
     }
   ])
   .then(function(answer){
-    console.log('answer', answer)
+    //console.log('answer', answer)
     if(answer.addAnother === true) {
       whichEmp()
     } else {
-      console.log('TIME TO BUILD THE TEAM!!!!')
-      console.log(teamArray)
       let rawHTML = generateTeam(teamArray);
-      //.then(teamArray => {
-      //   return generateTeam(teamArray); 
-      // })
-      // .then(rawHTML => {
-      //   return writeFile(rawHTML);
-      // })
-      // .then(writeFileResponse => {
-      //   console.log(writeFileResponse);
-      // })
-      // .catch(err => {
-      //   console.log(err);
-      // });
+      let writeFileResponse = writeFile(rawHTML);
+      writeFileResponse.then(data => {
+        console.log(data.message);
+      })
+      writeFileResponse.catch(err => {
+         console.log(err);
+      })
     }
   })
 }
-
 
 function finalEmpQuestion(answer) {
   var teamRoleQ;
   if (answer.role === 'Engineer') {
     teamRoleQ = "What is your engineer's GitHub username";
   } else if (answer.role === 'Intern') {
-    teamRoleQ = "What did your inter's go to school";
+    teamRoleQ = "Where did your intern go to school";
   } else if (answer.role === 'Manager') {
-    teamRoleQ = "What is your officenumber";
+    teamRoleQ = "What is your office number";
   }
 
   inquirer.prompt({
@@ -57,7 +49,7 @@ function finalEmpQuestion(answer) {
     type: 'input'
   })
   .then(function(finalAnswer){
-    console.log('Time to push to array', finalAnswer, answer)
+    //console.log('Time to push to array', finalAnswer, answer)
     if (answer.role === 'Engineer') {
       let newEngineer = new Engineer(answer.name, answer.id, answer.email, finalAnswer.final)
       teamArray.push(newEngineer)
@@ -100,7 +92,6 @@ function whichEmp() {
       message: "What is your employee's email?"
     }])
     .then(function(answer) {
-        console.log('this is the employee they want to make!!', answer)
         finalEmpQuestion(answer)
     })
 }
