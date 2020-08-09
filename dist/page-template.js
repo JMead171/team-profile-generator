@@ -6,7 +6,6 @@ const generateTeam = teamArray => {
   let i;
   let myHtml = "";
   for (i = 0; i < teamArray.length; i++) {
-      //console.log(teamArray, myHtml);
       if (teamArray[i] instanceof Manager) {
         myHtml += `
         <div>

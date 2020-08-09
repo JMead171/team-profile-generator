@@ -2,6 +2,7 @@
     --primary: #04556b;
     --secondary: #dfb355;
     --third: #262727;
+    --border: black;
   }
   
   * {
@@ -28,7 +29,7 @@
 
   .my-team div {
     border-style: solid;
-    border-color: black;
+    border-color: var(--border);
     width: 275px;
     margin: 5px;
     padding: 5px;

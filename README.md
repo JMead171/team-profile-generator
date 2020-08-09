@@ -47,15 +47,20 @@
   Pull requests are welcome. For major chages, please open an issue first to discuss what you would like to change. Make sure to update tests as required.
   
 
-  # Screen Shot
-  ![image](https://user-images.githubusercontent.com/64744763/89731728-60b81080-da17-11ea-87ea-45f028296829.png)
-
   # Technology Used
   Node.js, Javascript, HTML, CSS, jest, inquirer
 
 
+  # Screen Shot
+  ![image](https://user-images.githubusercontent.com/64744763/89731728-60b81080-da17-11ea-87ea-45f028296829.png)
+
+
+  # Video Walkthrough
+  https://drive.google.com/file/d/1QDgd9DpgryWCjpdQkTJ6e_b5ve8s18yh/view
+
+
   ## Tests
-  npm test
+  npm run test
 
   
   ## Questions

@@ -17,7 +17,6 @@ function addAnotherEmp() {
     }
   ])
   .then(function(answer){
-    //console.log('answer', answer)
     if(answer.addAnother === true) {
       whichEmp()
     } else {
@@ -49,7 +48,6 @@ function finalEmpQuestion(answer) {
     type: 'input'
   })
   .then(function(finalAnswer){
-    //console.log('Time to push to array', finalAnswer, answer)
     if (answer.role === 'Engineer') {
       let newEngineer = new Engineer(answer.name, answer.id, answer.email, finalAnswer.final)
       teamArray.push(newEngineer)
